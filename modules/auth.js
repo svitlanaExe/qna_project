@@ -1,5 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
+const db = require('../db/mysql');
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router.get('/registration', function (req, res) {
     });
 });
 
+
 router.post('/login', function (req, res) {
     const { username, password } = req.body;
 
@@ -22,7 +24,28 @@ router.post('/login', function (req, res) {
         if (!username || !password) {
             throw new Error('Params are empty');
         }
-    } catch (error) {
+        const passwordHash = crypto
+            .createHash('sha256')
+            .update(password)
+            .digest('hex');
+
+        db.query(
+            'SELECT id, username, password FROM users WHERE username = ? LIMIT 1',
+            username,
+            (err, results) => {
+                if(err) console.error(err);
+                 const password_db = results[0].password;
+                 if (passwordHash === password_db) {
+                    res.redirect('/');
+                 }
+                  else{
+                     res.redirect('/login');
+                    console.error(err);
+                  }
+            }
+
+        );
+    } catch (err) {
         res.redirect('./login?error=1');
     }
 });
@@ -33,7 +56,22 @@ router.post('/registration', function (req, res) {
         if (!username || !password1 || !password2 || !(password1 === password2)) {
             throw new Error("Params are empty or passwords don't match");
         }
-    } catch (error) {
+
+        const passwordHash1 = crypto
+            .createHash('sha256')
+            .update(password1)
+            .digest('hex');
+
+        db.query(
+            'INSERT INTO users (username, password) VALUES (?, ?)',
+            [username, passwordHash1],
+            (err, results) => {
+                if (err) console.error(err);
+                res.redirect('/login');
+            }
+        );
+
+    } catch (err) {
         res.redirect('./registration?error=1');
     }
 });
