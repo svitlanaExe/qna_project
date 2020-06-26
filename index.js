@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('./modules/auth');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const server = express();
 const port = 3000;
@@ -12,6 +13,17 @@ server.use(express.static('public'));
 server.use(
     bodyParser.urlencoded({
         extended: false,
+    })
+);
+
+server.use(
+    session({
+        secret: 'my super duper secret',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 60000,
+        },
     })
 );
 
