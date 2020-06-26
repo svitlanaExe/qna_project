@@ -5,7 +5,9 @@ const db = require('../db/mysql');
 const router = express.Router();
 
 router.get('/login', function (req, res) {
+    const { auth } = req.session;
     res.render('login', {
+        auth,
         error: !!req.query.error,
     });
 });
@@ -34,14 +36,18 @@ router.post('/login', function (req, res) {
             username,
             (err, results) => {
                 if(err) console.error(err);
-                 const password_db = results[0].password;
-                 if (passwordHash === password_db) {
-                    res.redirect('/');
-                 }
-                  else{
-                     res.redirect('/login');
-                    console.error(err);
-                  }
+                // const password = results[0].password;
+                if (passwordHash === results[0].password) {
+                    req.session.auth = {
+                        username: results[0].username,
+                        user_id: results[0].id,
+                    };
+                    res.redirect('/login');
+                }
+                   else{
+                      res.redirect('/login');
+                     console.error(err);
+                   }
             }
 
         );
