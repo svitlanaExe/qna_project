@@ -100,14 +100,19 @@
 </style>
 <div class="login-page">
     <div class="form">
-        <form class="login-form" method="POST" action="/login">
-            <input type="text" placeholder="username" name="username" />
-            <input type="password" placeholder="password" name="password" />
-            <button>login</button>
-            <% if (error) { %>
-                <p class="message-red">Email and password do not match or empty.</p>
-            <% } %>
-        </form>
+        <% if (auth) { %>
+            <h1>Hello <%= auth.username %></h1>
+        <% } else { %>
+            <form class="login-form" method="POST" action="/login">
+                <input type="text" placeholder="username" name="username" />
+                <input type="password" placeholder="password" name="password" />
+                <button>login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+                <% if (error) { %>
+                    <p class="message-red">Email and password do not match or empty.</p>
+                <% } %>
+            </form>
+        <% } %>
     </div>
 </div>
 <%- include('footer') %>
