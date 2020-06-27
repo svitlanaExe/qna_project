@@ -57,7 +57,7 @@ if (err) {
 
         );
     } catch (err) {
-        res.redirect('./login?error=1');
+        res.redirect('/auth/login?error=1');
     }
 });
 
