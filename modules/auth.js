@@ -51,7 +51,7 @@ if (err) {
                         console.error(err);
                     }
                 } else {
-                    res.redirect('/login');
+                    res.redirect('/auth/login');
                 }
             }
 
