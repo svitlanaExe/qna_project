@@ -45,7 +45,7 @@ if (err) {
                             username: results[0].username,
                             user_id: results[0].id,
                         };
-                        res.redirect('/login');
+                        res.redirect('/auth/login');
                     } else {
                         res.redirect('/login');
                         console.error(err);
