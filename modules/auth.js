@@ -35,19 +35,24 @@ router.post('/login', function (req, res) {
             'SELECT id, username, password FROM users WHERE username = ? LIMIT 1',
             username,
             (err, results) => {
-                if(err) console.error(err);
-                // const password = results[0].password;
-                if (passwordHash === results[0].password) {
-                    req.session.auth = {
-                        username: results[0].username,
-                        user_id: results[0].id,
-                    };
+if (err) {
+                    throw new Error(err);
+                }
+
+                if (results && results[0]) {
+                    if (passwordHash === results[0].password) {
+                        req.session.auth = {
+                            username: results[0].username,
+                            user_id: results[0].id,
+                        };
+                        res.redirect('/login');
+                    } else {
+                        res.redirect('/login');
+                        console.error(err);
+                    }
+                } else {
                     res.redirect('/login');
                 }
-                   else{
-                      res.redirect('/login');
-                     console.error(err);
-                   }
             }
 
         );
@@ -83,4 +88,3 @@ router.post('/registration', function (req, res) {
 });
 
 module.exports = router;
-
