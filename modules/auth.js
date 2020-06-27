@@ -83,7 +83,7 @@ router.post('/registration', function (req, res) {
         );
 
     } catch (err) {
-        res.redirect('./registration?error=1');
+        res.redirect('/auth/registration?error=1');
     }
 });
 
