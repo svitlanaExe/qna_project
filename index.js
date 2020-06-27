@@ -27,7 +27,7 @@ server.use(
     })
 );
 
-server.use('/', auth);
+server.use('/auth', auth);
 
 server.get('/', (req, res) => {
     res.render('index');
