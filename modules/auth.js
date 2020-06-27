@@ -78,7 +78,7 @@ router.post('/registration', function (req, res) {
             [username, passwordHash1],
             (err, results) => {
                 if (err) console.error(err);
-                res.redirect('/login');
+                res.redirect('/auth/login');
             }
         );
 
