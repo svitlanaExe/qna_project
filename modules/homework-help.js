@@ -9,8 +9,18 @@ let errorsList = {
     'SUBJECT_REQUIRED': 'Subject is required',
 };
 
+//category select from the DB
+let subj = {};
+
+db.query('SELECT category_name FROM category ', (err, results) => {
+    if (err) {
+        throw new Error(err);
+    }
+    subj = results;
+});
+
 router.get('/question', function (req, res) {
-    const { error_title, error_questionText, error_subject } = req.session;
+    const {error_title, error_questionText, error_subject} = req.session;
     delete req.session.error_title;
     delete req.session.error_questionText;
     delete req.session.error_subject;
@@ -18,13 +28,15 @@ router.get('/question', function (req, res) {
     res.render('homework-help/question', {
         error_title,
         error_questionText,
-        error_subject
+        error_subject,
+        subj,
     });
+
 });
 
 router.post('/question', function (req, res) {
-    const {title, 'question-text': questionText, subject, tags} = req.body;
 
+    const {title, 'question-text': questionText, subject, tags} = req.body;
     if (!title) {
         req.session.error_title = 'Title is required';
     }
@@ -53,8 +65,6 @@ router.post('/question', function (req, res) {
                 res.redirect('/');
             }
         );
-
-
     } else {
         res.redirect('/homework-help/question');
     }
