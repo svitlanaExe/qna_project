@@ -56,12 +56,16 @@
             <% if (error_subject) { %>
                 <label for="subject" class="error">*<%= error_subject %></label>
             <% } %>
+            <!--Extracting subject from the db -->
             <select id="subject" name="subject" class="subjects">
-                <option value="1">Biology</option>
-                <option value="2">Business</option>
-                <option value="3">Math</option>
-                <option value="4">Engineering</option>
+                <% for (var i = 0; i < subj.length; i++) { %>
+                    <option value='<%= i %>'>
+                        <%= Object.values(JSON.parse(JSON.stringify(subj[i]))) %>
+                    </option>
+                <% } %>
             </select>
+
+
             <input type="file" name="file" class="file"/>
             <input type="text" name="tags" placeholder="tags ..." class="tags"/>
         </div>
