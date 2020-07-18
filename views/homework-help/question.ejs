@@ -59,8 +59,8 @@
             <!--Extracting subject from the db -->
             <select id="subject" name="subject" class="subjects">
                 <% for (var i = 0; i < subj.length; i++) { %>
-                    <option value='<%= i %>'>
-                        <%= Object.values(JSON.parse(JSON.stringify(subj[i]))) %>
+                    <option value='<%= subj[i].id %>'>
+                        <%= subj[i].category_name %>
                     </option>
                 <% } %>
             </select>
