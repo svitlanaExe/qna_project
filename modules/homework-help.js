@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../db/mysql');
+const {fetchCategories} = require('../models/categories');
 
 const router = express.Router();
 
@@ -9,21 +10,15 @@ let errorsList = {
     'SUBJECT_REQUIRED': 'Subject is required',
 };
 
-//category select from the DB
-let subj = {};
 
-db.query('SELECT category_name FROM category ', (err, results) => {
-    if (err) {
-        throw new Error(err);
-    }
-    subj = results;
-});
-
-router.get('/question', function (req, res) {
+router.get('/question', async function (req, res) {
     const {error_title, error_questionText, error_subject} = req.session;
     delete req.session.error_title;
     delete req.session.error_questionText;
     delete req.session.error_subject;
+
+    const subj = await fetchCategories();
+    console.log(subj);
 
     res.render('homework-help/question', {
         error_title,
