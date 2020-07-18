@@ -20,7 +20,7 @@
     form button {
         width: 20%;
         padding: 10px;
-        background: #2196f3;
+        background: #eeba16;
         color: white;
         border: 1px solid grey;
         border-left: none;
@@ -29,12 +29,13 @@
         font-size: 17px;
     }
 
-    .grid {
-        display: none;
-        margin: 0 auto;
-    }
     img {
         position: relative;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .overlay {
@@ -63,11 +64,52 @@
         transform: translate(-50%, -50%);
         text-align: center;
     }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Style the search field */
+    form.search input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+
+    /* Style the submit button */
+    form.search button {
+        float: left;
+        width: 100%;
+        padding: 10px;
+        background: #eeba16;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none; /* Prevent double borders */
+        cursor: pointer;
+    }
+
+    form.search button:hover {
+        background: #eeba16;
+    }
+
+    /* Clear floats */
+    form.search::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
 </style>
-<form action="/" method="GET">
-<!-- Design coming soon -->
-</form>
-
-
-
+<div class="container">
+    <h2>LOGO</h2>
+    <form action="/" method="GET">
+        <form class="search">
+            <input type="text" placeholder="Search" name="search">
+            <button type="submit"><img src="action_page.png"></button>
+        </form>
+    </form>
+</div>
 <%- include('footer') %>

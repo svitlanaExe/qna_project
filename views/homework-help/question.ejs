@@ -1,0 +1,75 @@
+<%- include('../header') %>
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title {
+        display: flex;
+        width: 735px;
+        height: 25px;
+        margin-bottom: 10px;
+    }
+
+    .subjects {
+        width: 200px;
+        height: 25px;
+        font-size: large;
+    }
+
+    .tags {
+        width: 200px;
+        height: 20px;
+    }
+
+    .file {
+        border: 1px solid;
+        padding: 1px;
+    }
+
+    .submit-question {
+        margin-top: 10px;
+        width: 200px;
+        height: 25px;
+    }
+
+    .error {
+        display: flex;
+        color: #EF3B3A;
+    }
+</style>
+<div class="container">
+    <h2>Ask a question about your assignment</h2>
+    <form action="/homework-help/question" method="POST" enctype="multipart/form-data">
+        <% if (error_title) { %>
+            <label for="title" class="error">*<%= error_title %></label>
+        <% } %>
+        <input type="text" placeholder="Title.." id="title" name="title" class="title">
+        <% if (error_questionText) { %>
+            <label for="question-text" class="error">*<%= error_questionText %></label>
+        <% } %>
+        <textarea id="question-text" name="question-text" rows="10" cols="90"
+                  placeholder="Write your question here (Keep it simple and clear to get the best answer)"></textarea>
+        <div class="question-fields">
+            <% if (error_subject) { %>
+                <label for="subject" class="error">*<%= error_subject %></label>
+            <% } %>
+            <!--Extracting subject from the db -->
+            <select id="subject" name="subject" class="subjects">
+                <% for (var i = 0; i < subj.length; i++) { %>
+                    <option value='<%= subj[i].id %>'>
+                        <%= subj[i].category_name %>
+                    </option>
+                <% } %>
+            </select>
+
+
+            <input type="file" name="file" class="file"/>
+            <input type="text" name="tags" placeholder="tags ..." class="tags"/>
+        </div>
+        <input type="submit" value="Submit your question" class="submit-question">
+    </form>
+</div>
+<%- include('../footer') %>

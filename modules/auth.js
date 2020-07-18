@@ -5,7 +5,7 @@ const db = require('../db/mysql');
 const router = express.Router();
 
 router.get('/login', function (req, res) {
-    const { auth } = req.session;
+    const {auth} = req.session;
     res.render('login', {
         auth,
         error: !!req.query.error,
@@ -20,7 +20,7 @@ router.get('/registration', function (req, res) {
 
 
 router.post('/login', function (req, res) {
-    const { username, password } = req.body;
+    const {username, password} = req.body;
 
     try {
         if (!username || !password) {
@@ -35,7 +35,7 @@ router.post('/login', function (req, res) {
             'SELECT id, username, password FROM users WHERE username = ? LIMIT 1',
             username,
             (err, results) => {
-if (err) {
+                if (err) {
                     throw new Error(err);
                 }
 
@@ -54,7 +54,6 @@ if (err) {
                     res.redirect('/auth/login');
                 }
             }
-
         );
     } catch (err) {
         res.redirect('/auth/login?error=1');
@@ -62,7 +61,7 @@ if (err) {
 });
 
 router.post('/registration', function (req, res) {
-    const { username, password1, password2 } = req.body;
+    const {username, password1, password2} = req.body;
     try {
         if (!username || !password1 || !password2 || !(password1 === password2)) {
             throw new Error("Params are empty or passwords don't match");
