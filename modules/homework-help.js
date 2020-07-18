@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('../db/mysql');
 const {fetchCategories} = require('../models/categories');
+const {fetchQuestion} = require('../models/questions');
 
 const router = express.Router();
 
@@ -65,8 +66,12 @@ router.post('/question', function (req, res) {
     }
 });
 
-router.get('/question/:id', function (req, res) {
-    res.render('homework-help/question');
+router.get('/question/:id', async function (req, res) {
+    const question = await fetchQuestion(req.params.id);
+    console.log(question);
+    res.render('homework-help/question-preview', {
+        question: question[0],
+    });
 });
 
 module.exports = router;
