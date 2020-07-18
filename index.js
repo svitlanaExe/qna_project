@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('./modules/auth');
 const homeworkHelp = require('./modules/homework-help');
+const homePage = require('./modules/homepage');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
@@ -35,16 +36,11 @@ server.use(
     })
 );
 
+server.use('/', homePage);
 server.use('/auth', auth);
 server.use('/homework-help', homeworkHelp);
 
-server.get('/', (req, res) => {
-    res.render('index');
-});
 
-server.get('/asdasd.js', (req, res) => {
-    res.send('HAHA!');
-});
 
 server.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
