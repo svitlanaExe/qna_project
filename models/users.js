@@ -1,8 +1,8 @@
 const db = require('../db/mysql');
 
-function fetchCategories() {
+function fetchUsers() {
     return new Promise((resolve, reject) => {
-        db.query('SELECT category_id, category_name FROM category ', (err, results) => {
+        db.query('SELECT id, username FROM users', (err, results) => {
             if (err) {
                 reject(err);
             }
@@ -12,5 +12,5 @@ function fetchCategories() {
 }
 
 module.exports = {
-    fetchCategories,
+    fetchUsers,
 };

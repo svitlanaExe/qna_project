@@ -1,5 +1,28 @@
 <%- include('../header') %>
+<style>
+    .answer {
+        border: 1px solid;
+        padding: 15px;
+        margin-bottom: 5px;
+    }
+
+    .answer_username {
+        font-weight: bold;
+    }
+
+</style>
+
 <h1> <%= question.title %></h1>
 <p> <%= question.description %></p>
 <p> <%= question.category_name %></p>
+
+<% for (var i = 0; i < answers.length; i++) { %>
+    <div class="answer">
+        <p class="answer_username">  <%= answers[i].username %> </p>
+        <p class="answer_text">  <%= answers[i].text %> </p>
+    </div>
+<% } %>
+
+<%- include('answer') %>
+
 <%- include('../footer') %>
