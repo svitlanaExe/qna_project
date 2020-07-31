@@ -13,4 +13,4 @@ function fetchCategories() {
 
 module.exports = {
     fetchCategories,
-}
+};

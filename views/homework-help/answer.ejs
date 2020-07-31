@@ -3,29 +3,32 @@
         display: flex;
         margin-top: 15px;
     }
+
     .post-answer {
         margin-top: 15px;
         padding: 5px 20px;
-
     }
 </style>
-<form method="post" action="/homework-help/answer">
+<form method="POST" action="/homework-help/answer">
     <fieldset>
         <legend>POST THE ANSWER</legend>
-        <input type="hidden" name="question_id" value="<%=questionId%>">
+        <input type="hidden" name="question_id" value="<%= questionId %>">
+        <!-- Extracting subject from the db -->
         <select id="user_id" name="user_id" class="users">
             <% for (var i = 0; i < users.length; i++) { %>
-                <option value='<%= users[i].id%>'>
+                <option value='<%= users[i].id %>'>
                     <%= users[i].username %>
                 </option>
             <% } %>
         </select>
-        <textarea class = "answer-text"
-                  id="answer-text"
-                  name="answer_text"
-                  rows="10"
-                  cols="90"
-                  placeholder="Write your answer here (Keep it simple and clear)"></textarea>
- <input type = "submit" value="Post" class = "post-answer">
+        <textarea
+                class="answer-text"
+                id="answer-text"
+                name="answer_text"
+                rows="10"
+                cols="90"
+                placeholder="Write your answer here (Keep it simple and clear)"
+        ></textarea>
+        <input type="submit" value="Post" class="post-answer">
     </fieldset>
 </form>
