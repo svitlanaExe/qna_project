@@ -2,6 +2,8 @@ const express = require('express');
 const db = require('../db/mysql');
 const {fetchCategories} = require('../models/categories');
 const {fetchQuestion} = require('../models/questions');
+const {fetchAnswers, addAnswers} = require('../models/answers');
+const {fetchUsers} = require('../models/users');
 
 const router = express.Router();
 
@@ -66,12 +68,35 @@ router.post('/question', function (req, res) {
     }
 });
 
+router.post('/answer', async function (req, res) {
+    const { user_id, answer_text, question_id} = req.body;
+    console.log(question_id);
+    if(!user_id || !answer_text || !question_id) {
+        console.error('ALARMA!');
+        res.redirect('/homework-help/questions');
+    } else {
+        await addAnswers({user_id, answer_text, question_id});
+        res.redirect(`/homework-help/question/${question_id}`);
+    }
+
+});
+
 router.get('/question/:id', async function (req, res) {
+    const questionId = req.params.id;
     const question = await fetchQuestion(req.params.id);
-    console.log(question);
+    const answers = await fetchAnswers(questionId);
+    const users = await fetchUsers();
+
+    console.log(answers);
     res.render('homework-help/question-preview', {
         question: question[0],
+        answers,
+        users,
+        questionId
+     //   question_id: req.params.id,
+
     });
 });
+
 
 module.exports = router;
