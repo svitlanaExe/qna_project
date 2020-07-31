@@ -72,6 +72,7 @@ router.post('/question', function (req, res) {
 });
 
 router.post('/answer', async function (req, res) {
+
     const { user_id, answer_text, question_id } = req.body;
 
     if (!user_id || !answer_text || !question_id) {
@@ -99,5 +100,6 @@ router.get('/question/:id', async function (req, res) {
         questionId
     });
 });
+
 
 module.exports = router;

@@ -14,6 +14,7 @@ function fetchAnswers(id) {
     });
 }
 
+
 function addAnswer(params) {
     const { user_id, answer_text, question_id } = params;
 
